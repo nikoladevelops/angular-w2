@@ -42,12 +42,14 @@ export class AppComponent {
 ]
   // Initial state
 
+  endReached = false // whether the end has been reached / all books have been rated
+
   currBookIndex = 0; // tracking the current book's index / this is the book that we are visualizing
 
   // Each input field is binded with ngModel to these properties
-  currBookTitle = this.books[this.currBookIndex].title;
-  currBookAuthors = this.books[this.currBookIndex].authors;
-  currBookDescription = this.books[this.currBookIndex].description;
+  currBookTitle = this.books[this.currBookIndex].title
+  currBookAuthors = this.books[this.currBookIndex].authors
+  currBookDescription = this.books[this.currBookIndex].description
   calculatedAverageRating = this.calculateRating(this.books[this.currBookIndex].ratings) // this is all ratings' average calculated, this is being displayed
 
   currUserSelectedRating = -1 // this is the actual rating the user has currently chosen / it affects the calculated rating too.
@@ -65,13 +67,16 @@ export class AppComponent {
       this.books[this.currBookIndex].ratings.push(this.currUserSelectedRating)
     }
 
-    // After modifying the data, continue to the next book to review
+    // In case the user has looked through every single book
     if(this.currBookIndex == this.books.length-1){
-      this.currBookIndex = 0;
-    }else{
-      this.currBookIndex++;
+      this.endReached = true
+      return
     }
+
+    // Otherwise continue onwards until reaching the end
+    this.currBookIndex++
     
+    // Reset the state, so the book at the next current index is properly visualized
     this.resetState()
   }
 
@@ -90,15 +95,25 @@ export class AppComponent {
 
   // Calculates average rating
   calculateRating(allRatings: number[]): number {
-    if (allRatings.length === 0) return 0;
-    return allRatings.reduce((acc, cur) => acc + cur, 0) / allRatings.length;
+    if (allRatings.length === 0) return 0
+    return allRatings.reduce((acc, cur) => acc + cur, 0) / allRatings.length
   }
 
+  // Resets the current book's state / called when the currBookIndex has been changed
   resetState(){
     this.currBookTitle = this.books[this.currBookIndex].title;
     this.currBookAuthors = this.books[this.currBookIndex].authors;
     this.currBookDescription = this.books[this.currBookIndex].description;
     this.calculatedAverageRating = this.calculateRating(this.books[this.currBookIndex].ratings)
     this.currUserSelectedRating = -1
+  }
+  // Make it possible for the user to rate each book again by beginning from the start of the array yet again
+  rateEachBookAgain(){
+    this.currBookIndex = 0
+    this.resetState()
+    this.endReached = false; // important to reset this to false
+  }
+  finish(){
+    alert("Congrats for rating all books, you can leave now!")
   }
 }

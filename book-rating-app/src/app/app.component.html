@@ -1,35 +1,41 @@
 
-<h3>Book Info</h3>
 <main>
-  <section class="book-info-section">
-    <label for="bookTitle">Title: </label>
-    <input type="text" class="book-title" name="bookTitle" [(ngModel)]="currBookTitle">
-  </section>
-  <section class="book-info-section">
-    <label for="bookAuthors">Authors: </label>
-    <input type="text" class="book-authors" name="bookAuthors" [(ngModel)] = "currBookAuthors">
-  </section>
-  <section class="book-info-section">
-    <label for="bookDescription">Description: </label>
-    <textarea type="text" class="book-description" name="bookDescription" [(ngModel)] = "currBookDescription"></textarea>
-  </section>
+  @if(endReached){
+    <button (click)="rateEachBookAgain()">I want to rate each book again.</button>
+    <button (click)="finish()" >It's fine, I finished my job</button>
+  }
+  @else{
+    <h3>Book Info</h3>
     <section class="book-info-section">
-      @if(calculatedAverageRating == 0){
-        <label>No Rating Yet</label>
-      }
-      @else{
-        <label>Current Rating: {{calculatedAverageRating}}</label>
-      }
+      <label for="bookTitle">Title: </label>
+      <input type="text" class="book-title" name="bookTitle" [(ngModel)]="currBookTitle">
     </section>
-  
-  <section class="book-info-section">
-      <button (click)="setCurrentRating(1)" [class.active]="currUserSelectedRating === 1">1</button>
-      <button (click)="setCurrentRating(2)" [class.active]="currUserSelectedRating === 2">2</button>
-      <button (click)="setCurrentRating(3)" [class.active]="currUserSelectedRating === 3">3</button>
-      <button (click)="setCurrentRating(4)" [class.active]="currUserSelectedRating === 4">4</button>
-      <button (click)="setCurrentRating(5)" [class.active]="currUserSelectedRating === 5">5</button>
-  </section>
-  <div>
-    <button (click)="submitData()" type="button" class="save-btn">Save</button>
-  </div>
+    <section class="book-info-section">
+      <label for="bookAuthors">Authors: </label>
+      <input type="text" class="book-authors" name="bookAuthors" [(ngModel)] = "currBookAuthors">
+    </section>
+    <section class="book-info-section">
+      <label for="bookDescription">Description: </label>
+      <textarea type="text" class="book-description" name="bookDescription" [(ngModel)] = "currBookDescription"></textarea>
+    </section>
+      <section class="book-info-section">
+        @if(calculatedAverageRating == 0){
+          <label>No Rating Yet</label>
+        }
+        @else{
+          <label>Current Rating: {{calculatedAverageRating}}</label>
+        }
+      </section>
+    
+    <section class="book-info-section">
+        <button (click)="setCurrentRating(1)" [class.active]="currUserSelectedRating === 1">1</button>
+        <button (click)="setCurrentRating(2)" [class.active]="currUserSelectedRating === 2">2</button>
+        <button (click)="setCurrentRating(3)" [class.active]="currUserSelectedRating === 3">3</button>
+        <button (click)="setCurrentRating(4)" [class.active]="currUserSelectedRating === 4">4</button>
+        <button (click)="setCurrentRating(5)" [class.active]="currUserSelectedRating === 5">5</button>
+    </section>
+    <div>
+      <button (click)="submitData()" type="button" class="save-btn">Save</button>
+    </div>
+}
 </main>
